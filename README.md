@@ -37,7 +37,7 @@ FastlyCDN supports Magento Community Edition from version
 1.7 and Magento Enterprise Edition from version 1.12 onwards.
 
 You need an account with [fastly.com](https://www.fastly.com/signup) which allows [uploading of custom VCL](https://docs.fastly.com/guides/vcl/uploading-custom-vcl). If you need
-professional services for setup your environment please contact fastly.com.  
+professional services for setup your environment please contact sales@fastly.com.
 
 
 # 2. Installation
