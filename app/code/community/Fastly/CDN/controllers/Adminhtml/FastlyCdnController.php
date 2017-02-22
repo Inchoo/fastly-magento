@@ -334,6 +334,11 @@ class Fastly_CDN_Adminhtml_FastlyCdnController extends Mage_Adminhtml_Controller
         }
     }
 
+    /**
+     * Turn on/off TLS
+     *
+     * @return mixed
+     */
     public function toggleTlsAction()
     {
         try {
@@ -408,6 +413,11 @@ class Fastly_CDN_Adminhtml_FastlyCdnController extends Mage_Adminhtml_Controller
         }
     }
 
+    /**
+     * Get Error Page HTML Content
+     *
+     * @return mixed
+     */
     public function getErrorPageRespObjAction()
     {
         try {
@@ -430,6 +440,11 @@ class Fastly_CDN_Adminhtml_FastlyCdnController extends Mage_Adminhtml_Controller
         }
     }
 
+    /**
+     * Update Error Page HTML Page
+     *
+     * @return mixed
+     */
     public function updateErrorPageHtmlAction()
     {
         try {
@@ -521,6 +536,11 @@ class Fastly_CDN_Adminhtml_FastlyCdnController extends Mage_Adminhtml_Controller
         }
     }
 
+    /**
+     * Get Service backends
+     *
+     * @return mixed
+     */
     public function getBackendsAction()
     {
         try {
@@ -541,6 +561,11 @@ class Fastly_CDN_Adminhtml_FastlyCdnController extends Mage_Adminhtml_Controller
         }
     }
 
+    /**
+     * Update Fastly Backend options
+     *
+     * @return mixed
+     */
     public function updateBackendAction()
     {
         try {
