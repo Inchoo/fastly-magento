@@ -23,7 +23,7 @@
 <config>
     <modules>
         <Fastly_CDN>
-            <version>1.0.25</version>
+            <version>1.0.27</version>
         </Fastly_CDN>
     </modules>
     <global>
@@ -55,6 +55,11 @@
                     <html_header>Fastly_CDN_Block_Html_Header</html_header>
                 </rewrite>
             </page>
+            <core>
+                <rewrite>
+                    <messages>Fastly_CDN_Block_Core_Messages</messages>
+                </rewrite>
+            </core>
         </blocks>
         <resources>
             <fastlycdn_setup>
@@ -522,6 +527,9 @@
             <esi_tag>Fastly_CDN_Model_Esi_Tag_GeoIp_Action</esi_tag>
             <processor>Fastly_CDN_Model_Esi_Processor_GeoIp_Action</processor>
         </getcountryaction>
+        <global_messages>
+            <processor>Fastly_CDN_Model_Esi_Processor_Messages</processor>
+        </global_messages>
     </fastlycdn_esi_tags>
     <default>
         <fastlycdn>

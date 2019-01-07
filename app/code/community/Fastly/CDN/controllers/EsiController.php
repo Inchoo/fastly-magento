@@ -68,8 +68,8 @@ class Fastly_CDN_EsiController extends Mage_Core_Controller_Front_Action
 
     /**
      * Layout necessary layout handles
-     *
-     * @return void
+     * @throws Mage_Core_Exception
+     * @throws Mage_Core_Model_Store_Exception
      */
     protected function _prepareLayout()
     {
@@ -79,10 +79,10 @@ class Fastly_CDN_EsiController extends Mage_Core_Controller_Front_Action
             Mage::register('product', Mage::getModel('catalog/product'));
 
             // if current product id exists, register current product
-            if($currentProductId = $this->getRequest()->getParam($this->_getHelper()->getCurrentProductIdParam())) {
+            if ($currentProductId = $this->getRequest()->getParam($this->_getHelper()->getCurrentProductIdParam())) {
                 $currentProduct = Mage::getModel('catalog/product')
-                                ->setStoreId(Mage::app()->getStore()->getId())
-                                ->load($currentProductId);
+                    ->setStoreId(Mage::app()->getStore()->getId())
+                    ->load($currentProductId);
 
                 Mage::register('current_product', $currentProduct);
             }

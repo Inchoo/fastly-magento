@@ -45,11 +45,12 @@
             /* validate signature */
             if (var.X-Sig == regsub(digest.hmac_sha1(req.service_id, req.url.path var.X-Exp), "^0x", "")) {
             /* check that expiration time has not elapsed */
-            if (time.is_after(now, std.integer2time(std.atoi(var.X-Exp)))) {
-                error 410;
+                if (time.is_after(now, std.integer2time(std.atoi(var.X-Exp)))) {
+                    error 410;
+                }
+            } else {
+                error 403;
             }
-            }
-
         } else {
             set req.http.Fastly-Purge-Requires-Auth = "1";
         }
@@ -101,8 +102,17 @@
     # check for ESI calls
     if (req.url.qs ~ "esi_data=") {
         # check for valid cookie data
-        if (req.http.Cookie ~ "FASTLY_CDN-([A-Za-z0-9-_]+)=([^;]*)") {
-            set req.url = querystring.filter(req.url, "esi_data") + "&esi_data=" + re.group.2;
+        declare local var.esi_data_field STRING;
+        declare local var.cookie_data STRING;
+        # Based on esi_data value requested we will need to search for cookie FASTLY_CDN-<type> e.g. FASTLY_CDN-customer_quote
+        set var.esi_data_field = "FASTLY_CDN-" subfield(req.url.qs, "esi_data", "&");
+        # We can't use variables in either subfield or regex so we need to use this workaround
+        # to extract value of cookie that we compiled in esi_data_field
+        set var.cookie_data = std.strstr(req.http.Cookie,var.esi_data_field);
+        set var.cookie_data = regsub(var.cookie_data,"^[^=]*=([^;]*).*","\1");
+        # If found a value we replace the query string with the contents of that cookie
+        if ( var.cookie_data != "" ) {
+          set req.url = querystring.set(req.url, "esi_data", var.cookie_data);
         }
     }
 
@@ -111,7 +121,7 @@
     set req.http.Magento-Original-URL = req.url;
     set req.url = querystring.regfilter(req.url, "^(####QUERY_PARAMETERS####)");
     # Sort the query arguments to increase cache hit ratio with query arguments that
-    # may be out of order however only on URLs that are not being passed. 
+    # may be out of order however only on URLs that are not being passed.
     if ( !req.http.x-pass ) {
         set req.url = boltsort.sort(req.url);
     }
